@@ -5,7 +5,7 @@ Primera versión sencilla para navegador móvil. Solo tiene dos tipos de acción
 - **URL:** abre páginas web (YouTube, vídeos, webs, mapas, etc.) en otra pestaña.
 - **CALL:** abre el marcador del teléfono con el número preparado. La persona confirma la llamada.
 
-## Probar en un ordenador
+## Probar en un  ordenador
 
 1. Instala Node.js LTS desde https://nodejs.org/.
 2. Descomprime el ZIP y abre una terminal dentro de la carpeta `botonera-webapp-v1`.
