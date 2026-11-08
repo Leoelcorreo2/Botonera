@@ -1,0 +1,11 @@
+{
+  "name": "Mi Botonera",
+  "short_name": "Botonera",
+  "description": "Botonera accesible para abrir páginas web y llamar por teléfono.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f5f8",
+  "theme_color": "#f3f5f8",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

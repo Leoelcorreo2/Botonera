@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f3f5f8" />
+  <meta name="description" content="Botonera accesible y personalizable para abrir páginas web y llamar por teléfono." />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <title>Mi Botonera</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar"><div><p class="eyebrow">ACCESO RÁPIDO</p><h1>Mi Botonera</h1></div><span id="count" class="count" aria-live="polite">0 botones</span></header>
+    <main id="main" class="main-content">
+      <section id="homeView" aria-label="Botones disponibles">
+        <div id="buttonList" class="button-list"></div>
+        <div id="emptyState" class="empty-state" hidden><span aria-hidden="true">👋</span><h2>Tu botonera está vacía</h2><p>Entra en configuración para crear botones o importa una botonera que te hayan enviado.</p></div>
+      </section>
+      <section id="adminView" hidden aria-label="Configuración">
+        <div class="section-heading"><button class="back-button" id="backHome">← Volver</button><div><p class="eyebrow">ADMINISTRACIÓN</p><h2>Configurar botonera</h2></div></div>
+        <div class="admin-actions">
+          <button class="action-button primary" id="newButton">＋ Crear botón</button>
+          <button class="action-button" id="exportAll">⇧ Exportar todos</button>
+          <button class="action-button danger-outline" id="deleteAll">⌫ Borrar todos</button>
+          <button class="action-button" id="changePin">🔐 Cambiar PIN</button>
+        </div>
+        <div id="adminList" class="admin-list"></div>
+      </section>
+    </main>
+    <nav class="bottom-nav" aria-label="Acciones principales">
+      <button id="importButton" class="nav-button"><span aria-hidden="true">📥</span><span>Importar</span></button>
+      <button id="configButton" class="nav-button"><span aria-hidden="true">⚙️</span><span>Configuración</span></button>
+    </nav>
+    <input id="fileInput" type="file" accept=".json,application/json" hidden />
+    <div id="dialogHost"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+  <script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
+</body>
+</html>
