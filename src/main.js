@@ -12,8 +12,8 @@ function set(key,value){localStorage.setItem(key,value)}
 
 /**
  * Carga la botonera. En cada apertura consulta datos.json del servidor
- * y actualiza solo si la versión del servidor es mayor que la local.
- * Si no hay red, usa el estado local. Si no hay nada, usa los defaults.
+ * y actualiza solo si la versión del servidor es mayor que la local,
+ * O si el estado local está vacío (para recuperar tras borrar todo).
  */
 async function load(){
   let localState=null;
@@ -40,8 +40,10 @@ async function load(){
 
     const serverVersion=serverConfig.version??1;
     const localVersion=localState?.version??0;
+    const localIsEmpty=!localState || !Array.isArray(localState.buttons) || localState.buttons.length===0;
 
-    if(serverVersion>localVersion){
+    // Actualizar si: versión nueva en servidor O estado local vacío
+    if(serverVersion>localVersion || localIsEmpty){
       const merged=aplicarConfigServidor(localState,serverConfig);
       const newState={
         format:'botonera-config',
@@ -89,7 +91,7 @@ function aplicarConfigServidor(localState,serverConfig){
   const mode=serverConfig.importMode||'replace';
   const serverButtons=Array.isArray(serverConfig.buttons)?serverConfig.buttons:[];
 
-  if(mode==='replace' || !localState || !Array.isArray(localState.buttons)){
+  if(mode==='replace' || !localState || !Array.isArray(localState.buttons) || localState.buttons.length===0){
     return structuredClone(serverButtons);
   }
 
@@ -107,7 +109,7 @@ const type=String(b.type||'').toUpperCase();if(!['CALL','URL'].includes(type))th
 const label=String(b.label||'').trim();if(!label||label.length>70)throw Error('Cada botón necesita un nombre de 1 a 70 caracteres.');
 const id=String(b.id||`btn-${Date.now()}-${index}`).trim();if(!id||id.length>80)throw Error('Identificador no válido.');
 const target={...(b.target||{})};
-if(type==='CALL'){target.phone=String(target.phone||'').trim();if(!/^+?[0-9()-]{3,24}$/.test(target.phone))throw Error(`Teléfono no válido en «${label}».`);}
+if(type==='CALL'){target.phone=String(target.phone||'').trim();if(!/^\+?[0-9()-]{3,24}$/.test(target.phone))throw Error(`Teléfono no válido en «${label}».`);}
 if(type==='URL'){target.url=String(target.url||'').trim();let u;try{u=new URL(target.url)}catch{throw Error(`Dirección web no válida en «${label}».`)}if(!['https:','http:'].includes(u.protocol))throw Error('Solo se admiten direcciones HTTP o HTTPS.');}
 const bg=String(b.style?.background||'#245B87'),fg=String(b.style?.foreground||'#FFFFFF'),size=['S','M','L','XL'].includes(b.style?.size)?b.style.size:'L';
 if(!/^#[0-9A-Fa-f]{6}$/.test(bg)||!/^#[0-9A-Fa-f]{6}$/.test(fg))throw Error('Color no válido.');
