@@ -1,10 +1,10 @@
 {
   "format": "botonera-config",
-  "version": 3,
+  "version": 4,
   "importMode": "replace",
   "buttons": [
     {"id":"youtube","position":1000,"type":"URL","label":"VER AX1AHORA","emoji":"🌤️","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#C62828","foreground":"#FFFFFF","size":"XL"}},
-    {"id":"llamar-casa","position":2000,"type":"CALL","label":"LLAMAR A CASA","emoji":"📞","target":{"phone":"600123456"},"style":{"background":"#16834A","foreground":"#FFFFFF","size":"XL"}},
-    {"id":"tiempo","position":3000,"type":"URL","label":"TIEMPO","emoji":"🌤️","target":{"url":"https://www.tiempo.com"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
+    {"id":"llamar-casa","position":2000,"type":"CALL","label":"LLAMAR A CASA 2","emoji":"📞","target":{"phone":"600123456"},"style":{"background":"#16834A","foreground":"#FFFFFF","size":"XL"}},
+    {"id":"tiempo","position":3000,"type":"URL","label":"TIEMPO 2","emoji":"🌤️","target":{"url":"https://www.tiempo.com"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
   ]
 }
