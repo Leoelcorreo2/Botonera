@@ -1,6 +1,6 @@
 {
   "format": "botonera-config",
-  "version": 10,
+  "version": 11,
   "importMode": "replace",
   "buttons": [
     {"id":"youtube","position":1000,"type":"URL","label":"VER YOUTUBE","emoji":"🍿","target":{"url":"https://www.youtube.com/"},"style":{"background":"#C62828","foreground":"#FFFFFF","size":"XL"},"hidden":false},
