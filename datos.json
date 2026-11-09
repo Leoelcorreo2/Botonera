@@ -1,6 +1,6 @@
 {
   "format": "botonera-config",
-  "version": 12,
+  "version": 13,
   "importMode": "replace",
   "buttons": [
     {"id":"youtube","position":1000,"type":"URL","label":"VER YOUTUBE","emoji":"🍿","target":{"url":"https://www.youtube.com/"},"style":{"background":"#C62828","foreground":"#FFFFFF","size":"S"},"hidden":false},
@@ -10,6 +10,27 @@
     {"id":"youtube-ax1ahora","position":5000,"type":"URL","label":"VER AX1AHORA","emoji":"🍿","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":false},
     {"id":"url-001","position":6000,"type":"URL","label":"Santa Misa","emoji":"⛪","target":{"url":"https://www.misacerca.com/santa-misa-hoy"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":false},
     {"id":"url-002","position":7000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
-    {"id":"url-003","position":8000,"type":"URL","label":"Esquelas","emoji":"✝️","target":{"url":"https://www.vivecampoo.es/esquelas.html"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":false}
+    {"id":"url-003","position":8000,"type":"URL","label":"Esquelas","emoji":"✝️","target":{"url":"https://www.vivecampoo.es/esquelas.html"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":false},
+    
+    {"id":"url-004","position":9000,"type":"URL","label":"Aces MAL","emoji":"🍿","target":{"url":"acestream://d65257bb934b73647374224fd62d836815804be2000"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-005","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-006","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-007","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-008","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-009","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-010","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    
+    {"id":"url-012","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-012","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-013","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-014","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-015","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-016","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-017","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-018","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-019","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    {"id":"url-020","position":9000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.loteriasyapuestas.es/es"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true},
+    
+    {"id":"url-999","position":9000,"type":"URL","label":"Esquelas","emoji":"✝️","target":{"url":"https://www.vivecampoo.es/esquelas.html"},"style":{"background":"#E8B638","foreground":"#202020","size":"S"},"hidden":true}
   ]
 }
