@@ -1,15 +1,15 @@
 {
   "format": "botonera-config",
-  "version":6,
+  "version":7,
   "importMode": "replace",
   "buttons": [
     {"id":"youtube","position":1000,"type":"URL","label":"VER YOUTUBE","emoji":"🍿","target":{"url":"https://www.youtube.com/"},"style":{"background":"#C62828","foreground":"#FFFFFF","size":"XL"}},
     {"id":"llamar-Oviedo","position":2000,"type":"CALL","label":"LLAMAR A CASA 2","emoji":"📞","target":{"phone":"600123456"},"style":{"background":"#16834A","foreground":"#FFFFFF","size":"XL"}},
     {"id":"llamar-Reinosa","position":3000,"type":"CALL","label":"LLAMAR A CASA 2","emoji":"📞","target":{"phone":"600123456"},"style":{"background":"#16834A","foreground":"#FFFFFF","size":"XL"}},
     {"id":"llamar-Villaviciosa","position":4000,"type":"CALL","label":"LLAMAR A CASA 2","emoji":"📞","target":{"phone":"600123456"},"style":{"background":"#16834A","foreground":"#FFFFFF","size":"XL"}},
-    {"id":"youtube-ax1ahora","position":5000,"type":"URL","label":"VER AX1AHORA","emoji":"🍿","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
-    {"id":"url-001","position":6000,"type":"URL","label":"Santa Misa","emoji":"⛪","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
-    {"id":"url-002","position":7000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
+    {"id":"youtube-ax1ahora","position":5000,"type":"URL","label":"VER AX1AHORA","emoji":"🍿","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}},
+    {"id":"url-001","position":6000,"type":"URL","label":"Santa Misa","emoji":"⛪","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}},
+    {"id":"url-002","position":7000,"type":"URL","label":"Loterias","emoji":"🎲","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}},
     {"id":"url-003","position":8000,"type":"URL","label":"Esquelas","emoji":"✝️","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#E8B638","foreground":"#202020","size":"L"}}
 
   ]
