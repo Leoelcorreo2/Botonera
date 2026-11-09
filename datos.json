@@ -1,6 +1,6 @@
 {
   "format": "botonera-config",
-  "version": 1,
+  "version": 3,
   "importMode": "replace",
   "buttons": [
     {"id":"youtube","position":1000,"type":"URL","label":"VER AX1AHORA","emoji":"🌤️","target":{"url":"https://www.youtube.com/ax1ahora"},"style":{"background":"#C62828","foreground":"#FFFFFF","size":"XL"}},
