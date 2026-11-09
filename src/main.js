@@ -1,12 +1,16 @@
 const KEY='botonera_config_v1', PIN_KEY='botonera_pin_v1', BACKUP_KEY='botonera_backup_v1';
 const DEFAULT_CONFIG_URL='./datos.json';
 const $=id=>document.getElementById(id);
-const state={buttons:[],pin:'0000',view:'home',version:1};
+
+// CORRECCIÓN 1: Añadido 'version: 1' al estado inicial para que la memoria lo rastree
+const state={buttons:[], pin:'0000', view:'home', version:1};
+
 const defaults=[
-{id:'emergencia',position:1000,type:'CALL',label:'LLAMAR A EMERGENCIA',emoji:'🚨',target:{phone:'112'},style:{background:'#B42318',foreground:'#FFFFFF',size:'XL'},hidden:false},
-{id:'youtube',position:2000,type:'URL',label:'VER YOUTUBE',emoji:'▶️',target:{url:'https://www.youtube.com'},style:{background:'#C62828',foreground:'#FFFFFF',size:'L'},hidden:false},
-{id:'tiempo',position:3000,type:'URL',label:'VER EL TIEMPO',emoji:'🌤️',target:{url:'https://www.meteoblue.com'},style:{background:'#E8B638',foreground:'#202020',size:'L'},hidden:false}
+  {id:'emergencia',position:1000,type:'CALL',label:'LLAMAR A EMERGENCIA',emoji:'🚨',target:{phone:'112'},style:{background:'#B42318',foreground:'#FFFFFF',size:'XL'},hidden:false},
+  {id:'youtube',position:2000,type:'URL',label:'VER YOUTUBE',emoji:'▶️',target:{url:'https://www.youtube.com'},style:{background:'#C62828',foreground:'#FFFFFF',size:'L'},hidden:false},
+  {id:'tiempo',position:3000,type:'URL',label:'VER EL TIEMPO',emoji:'🌤️',target:{url:'https://www.meteoblue.com'},style:{background:'#E8B638',foreground:'#202020',size:'L'},hidden:false}
 ];
+
 function get(key){return localStorage.getItem(key)}
 function set(key,value){localStorage.setItem(key,value)}
 
@@ -23,12 +27,6 @@ async function load(){
     localState=null;
   }
   state.pin=get(PIN_KEY)||'0000';
-  
-  // Si hay estado local, recuperar su versión
-  if(localState && localState.version){
-    state.version = localState.version;
-  }
-  
   try{
     const res=await fetch(DEFAULT_CONFIG_URL,{cache:'no-store'});
     if(!res.ok) throw new Error('HTTP '+res.status);
@@ -42,40 +40,30 @@ async function load(){
     
     if(serverVersion>localVersion || localIsEmpty){
       const merged=aplicarConfigServidor(localState,serverConfig);
-      state.version = serverVersion;
-      const newState={
-        format:'botonera-config',
-        version:serverVersion,
-        importMode:serverConfig.importMode||'upsert',
-        buttons:merged
-      };
+      const newState={format:'botonera-config',version:serverVersion,importMode:serverConfig.importMode||'upsert',buttons:merged};
       set(KEY,JSON.stringify(newState));
       state.buttons=merged;
+      state.version=serverVersion; // CORRECCIÓN 2: Sincronizar versión en memoria
       console.log('Botonera actualizada a versión '+serverVersion);
       return;
     }
     if(localState && Array.isArray(localState.buttons)){
       state.buttons=localState.buttons;
-      state.version = localState.version || 1;
+      state.version=localState.version||1; // CORRECCIÓN 3: Cargar versión local en memoria
       return;
     }
-    state.version = serverVersion;
-    const inicial={
-      format:'botonera-config',
-      version:serverVersion,
-      importMode:serverConfig.importMode||'upsert',
-      buttons:Array.isArray(serverConfig.buttons)?structuredClone(serverConfig.buttons):[]
-    };
+    const inicial={format:'botonera-config',version:serverVersion,importMode:serverConfig.importMode||'upsert',buttons:Array.isArray(serverConfig.buttons)?structuredClone(serverConfig.buttons):[]};
     set(KEY,JSON.stringify(inicial));
     state.buttons=inicial.buttons;
+    state.version=serverVersion; // CORRECCIÓN 4
   }catch(err){
     console.warn('No se pudo cargar datos.json, usando estado local:',err);
     if(localState && Array.isArray(localState.buttons)){
       state.buttons=localState.buttons;
-      state.version = localState.version || 1;
+      state.version=localState.version||1; // CORRECCIÓN 5
     }else{
       state.buttons=structuredClone(defaults);
-      state.version = 1;
+      state.version=1; // CORRECCIÓN 6
       persist();
       toast('Sin conexión y sin datos locales. Se ha cargado una botonera de ejemplo.');
     }
@@ -96,11 +84,8 @@ function aplicarConfigServidor(localState,serverConfig){
 }
 
 function persist(){
-  set(KEY,JSON.stringify({
-    format:'botonera-config',
-    version:state.version||1,
-    buttons:state.buttons
-  }));
+  // Ahora state.version existe y se guardará correctamente, evitando que se reinicie a 1
+  set(KEY,JSON.stringify({format:'botonera-config',version:state.version||1,buttons:state.buttons}));
 }
 
 function validateButton(b,index=0){
@@ -200,7 +185,7 @@ function openAdmin(){askPin(()=>{state.view='admin';render();});}
 function exportAll(){const data=JSON.stringify({format:'botonera-config',version:state.version||1,importMode:'replace',buttons:sorted()},null,2),filename=`botonera-${new Date().toISOString().slice(0,10)}.json`;const blob=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Copia JSON descargada.');}
 function importFile(){$('fileInput').click();}
 $('fileInput').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{importConfig(validateConfig(JSON.parse(await file.text())));}catch(err){toast(`No se pudo importar: ${err.message}`);}finally{e.target.value='';}});
-function importConfig(config){const replace=config.importMode==='replace',incoming=config.buttons;if(replace){confirmDialog(`Vas a sustituir los ${state.buttons.length} botones actuales por ${incoming.length} botones recibidos. Se guardará una copia de seguridad. ¿Continuar?`,()=>{set(BACKUP_KEY,JSON.stringify({buttons:state.buttons,savedAt:new Date().toISOString()}));state.buttons=incoming;persist();render();toast('Botonera sustituida correctamente.');},true);return;}const ids=new Set(state.buttons.map(b=>b.id));let added=0,updated=0;for(const b of incoming){if(ids.has(b.id))updated++;else added++;}confirmDialog(`Se añadirán ${added} botones y se actualizarán ${updated}. Los demás se conservarán. ¿Continuar?`,()=>{set(BACKUP_KEY,JSON.stringify({buttons:state.buttons,savedAt:new Date().toISOString()}));for(const b of incoming){const i=state.buttons.findIndex(x=>x.id===b.id);if(i>=0)state.buttons[i]=b;else state.buttons.push(b);}persist();render();toast('Importación completada.');});}
+function importConfig(config){const replace=config.importMode==='replace',incoming=config.buttons;if(replace){confirmDialog(`Vas a sustituir los ${state.buttons.length} botones actuales por ${incoming.length} botones recibidos. Se guardará una copia de seguridad. ¿Continuar?`,()=>{set(BACKUP_KEY,JSON.stringify({buttons:state.buttons,savedAt:new Date().toISOString()}));state.buttons=incoming;state.version=config.version||1;persist();render();toast('Botonera sustituida correctamente.');},true);return;}const ids=new Set(state.buttons.map(b=>b.id));let added=0,updated=0;for(const b of incoming){if(ids.has(b.id))updated++;else added++;}confirmDialog(`Se añadirán ${added} botones y se actualizarán ${updated}. Los demás se conservarán. ¿Continuar?`,()=>{set(BACKUP_KEY,JSON.stringify({buttons:state.buttons,savedAt:new Date().toISOString()}));for(const b of incoming){const i=state.buttons.findIndex(x=>x.id===b.id);if(i>=0)state.buttons[i]=b;else state.buttons.push(b);}persist();render();toast('Importación completada.');});}
 function changePin(){showDialog(`<h2>Cambiar PIN</h2><div class="form-grid">${field('PIN actual','oldPin','','password')}${field('Nuevo PIN (4 cifras)','newPin','','password')}${field('Repetir nuevo PIN','newPin2','','password')}</div><div class="dialog-actions"><button id="pinNo">Cancelar</button><button id="pinSave" class="confirm">Guardar</button></div>`);$('pinNo').onclick=closeDialog;$('pinSave').onclick=()=>{const a=$('oldPin').value,b=$('newPin').value,c=$('newPin2').value;if(a!==state.pin){toast('El PIN actual no es correcto.');return;}if(!/^\d{4}$/.test(b)||b!==c){toast('El nuevo PIN debe tener cuatro cifras iguales en ambos campos.');return;}state.pin=b;set(PIN_KEY,b);closeDialog();toast('PIN actualizado.');};}
 function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),3200);}
 $('configButton').onclick=openAdmin;$('importButton').onclick=importFile;$('backHome').onclick=()=>{state.view='home';render();};$('newButton').onclick=()=>openEditor();$('exportAll').onclick=exportAll;$('changePin').onclick=changePin;$('deleteAll').onclick=()=>confirmDialog(`Se eliminarán los ${state.buttons.length} botones. Se guardará una copia de seguridad. ¿Continuar?`,()=>{set(BACKUP_KEY,JSON.stringify({buttons:state.buttons,savedAt:new Date().toISOString()}));state.buttons=[];persist();render();toast('Botonera vaciada.');},true);
