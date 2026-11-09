@@ -1,16 +1,12 @@
 const KEY='botonera_config_v1', PIN_KEY='botonera_pin_v1', BACKUP_KEY='botonera_backup_v1';
 const DEFAULT_CONFIG_URL='./datos.json';
 const $=id=>document.getElementById(id);
-
-// CORRECCIÓN 1: Añadido 'version: 1' al estado inicial para que la memoria lo rastree
 const state={buttons:[], pin:'0000', view:'home', version:1};
-
 const defaults=[
   {id:'emergencia',position:1000,type:'CALL',label:'LLAMAR A EMERGENCIA',emoji:'🚨',target:{phone:'112'},style:{background:'#B42318',foreground:'#FFFFFF',size:'XL'},hidden:false},
   {id:'youtube',position:2000,type:'URL',label:'VER YOUTUBE',emoji:'▶️',target:{url:'https://www.youtube.com'},style:{background:'#C62828',foreground:'#FFFFFF',size:'L'},hidden:false},
   {id:'tiempo',position:3000,type:'URL',label:'VER EL TIEMPO',emoji:'🌤️',target:{url:'https://www.meteoblue.com'},style:{background:'#E8B638',foreground:'#202020',size:'L'},hidden:false}
 ];
-
 function get(key){return localStorage.getItem(key)}
 function set(key,value){localStorage.setItem(key,value)}
 
@@ -43,27 +39,27 @@ async function load(){
       const newState={format:'botonera-config',version:serverVersion,importMode:serverConfig.importMode||'upsert',buttons:merged};
       set(KEY,JSON.stringify(newState));
       state.buttons=merged;
-      state.version=serverVersion; // CORRECCIÓN 2: Sincronizar versión en memoria
+      state.version=serverVersion;
       console.log('Botonera actualizada a versión '+serverVersion);
       return;
     }
     if(localState && Array.isArray(localState.buttons)){
       state.buttons=localState.buttons;
-      state.version=localState.version||1; // CORRECCIÓN 3: Cargar versión local en memoria
+      state.version=localState.version||1;
       return;
     }
     const inicial={format:'botonera-config',version:serverVersion,importMode:serverConfig.importMode||'upsert',buttons:Array.isArray(serverConfig.buttons)?structuredClone(serverConfig.buttons):[]};
     set(KEY,JSON.stringify(inicial));
     state.buttons=inicial.buttons;
-    state.version=serverVersion; // CORRECCIÓN 4
+    state.version=serverVersion;
   }catch(err){
     console.warn('No se pudo cargar datos.json, usando estado local:',err);
     if(localState && Array.isArray(localState.buttons)){
       state.buttons=localState.buttons;
-      state.version=localState.version||1; // CORRECCIÓN 5
+      state.version=localState.version||1;
     }else{
       state.buttons=structuredClone(defaults);
-      state.version=1; // CORRECCIÓN 6
+      state.version=1;
       persist();
       toast('Sin conexión y sin datos locales. Se ha cargado una botonera de ejemplo.');
     }
@@ -84,7 +80,6 @@ function aplicarConfigServidor(localState,serverConfig){
 }
 
 function persist(){
-  // Ahora state.version existe y se guardará correctamente, evitando que se reinicie a 1
   set(KEY,JSON.stringify({format:'botonera-config',version:state.version||1,buttons:state.buttons}));
 }
 
