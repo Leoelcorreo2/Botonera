@@ -1,4 +1,4 @@
-const CACHE='mi-botonera-v1';
+const CACHE='mi-botonera-v2';
 const DATOS_CACHE='mi-botonera-datos';
 const FILES=['./','./index.html','./src/main.js','./src/styles.css','./manifest.webmanifest','./icon.svg'];
 
